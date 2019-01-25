@@ -19,7 +19,7 @@ services:
     build: php
     container_name: mage2_php
     volumes:
-      - /dockers/install-magento-2.sh:/install-magento-2.sh
+      - /projects/install-magento-2.sh:/install-magento-2.sh
       - /projects/magento2/:/magento2/
     networks:
       - network-back
