@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: mage2_nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    volumes:
+      - /projects/magento2/:/magento2/
+      - ./nginx/mage2.conf:/etc/nginx/conf.d/mage2
+      - ./nginx/mage2.local.conf:/etc/nginx/conf.d/mage2.local.conf
+    networks:
+      - network-back
+
+  php:
+    build: php
+    container_name: mage2_php
+    volumes:
+      - /dockers/install-magento-2.sh:/install-magento-2.sh
+      - /projects/magento2/:/magento2/
+    networks:
+      - network-back
+
+  db:
+    image: mariadb
+    container_name: mage2_mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - network-back
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mage2_mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - network-back
+
+  redis:
+    image: redis
+    container_name: mage2_redis
+    ports:
+      - "6379:6379"
+    networks:
+      - network-back
+
+networks:
+  network-back:
+    driver: bridge
