@@ -9,7 +9,7 @@ services:
     depends_on:
       - php
     volumes:
-      - /projects/magento2/:/magento2/
+      - ~/Projects/magento2/:/magento2/
       - ./nginx/mage2.conf:/etc/nginx/conf.d/mage2
       - ./nginx/mage2.local.conf:/etc/nginx/conf.d/mage2.local.conf
     networks:
@@ -19,8 +19,7 @@ services:
     build: php
     container_name: mage2_php
     volumes:
-      - /projects/install-magento-2.sh:/install-magento-2.sh
-      - /projects/magento2/:/magento2/
+      - ~/Projects/magento2/:/magento2/
     networks:
       - network-back
 
