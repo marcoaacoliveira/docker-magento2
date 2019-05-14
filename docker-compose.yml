@@ -8,24 +8,31 @@ services:
       - "80:80"
     depends_on:
       - php
-    volumes:
-      - ~/Projects/magento2/:/magento2/
-      - ./nginx/mage2.conf:/etc/nginx/conf.d/mage2
-      - ./nginx/mage2.local.conf:/etc/nginx/conf.d/mage2.local.conf
+    volumes: &appvolumes
+      - ~/Projects/magento2/app/code:/magento2/app/code:delegated
+      - ~/Projects/magento2/app/design:/magento2/app/design:delegated
+      - ~/Projects/magento2/app/etc:/magento2/app/etc:delegated
+      - ~/Projects/magento2/composer.json:/magento2/composer.json:delegated
+      - ~/Projects/magento2/composer.lock:/magento2/composer.lock:delegated
+      - ./nginx/mage2.conf:/etc/nginx/conf.d/mage2:delegated
+      - ./nginx/mage2.local.conf:/etc/nginx/conf.d/mage2.local.conf:delegated
+      - ~/Projects/magento2/var/log:/magento2/var/log
+      - ~/Projects/magento2/var/report:/magento2/var/report
     networks:
       - network-back
 
   php:
     build: php
     container_name: mage2_php
-    volumes:
-      - ~/Projects/magento2/:/magento2/
+    volumes: *appvolumes
     networks:
       - network-back
 
   db:
     image: mariadb
     container_name: mage2_mariadb
+    volumes:
+      - "~/databases/magento2:/var/lib/mysql"
     ports:
       - "3306:3306"
     environment:
