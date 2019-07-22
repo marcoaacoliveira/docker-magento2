@@ -1,0 +1,11 @@
+# To create new servers just copy the content of this file to a new one ending in .conf, and change every reference between {}
+# You need to use docker-compose.yml to add the reference from the folder in your local machine to container.
+upstream fastcgi_backend {
+   server php:9000;
+}
+server {
+   listen 80;
+   server_name {project_url};
+   set $MAGE_ROOT {path_to_magento_in_container};
+   include /etc/nginx/conf.d/mage2;
+}
