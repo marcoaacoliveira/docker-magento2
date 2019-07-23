@@ -11,8 +11,9 @@ services:
     volumes: &appvolumes
 #     - {path_to_new_project:folder_into_container:delegated}
       - ~/Projects/magento2:/magento2/:delegated
-      - ./nginx/mage2.conf:/etc/nginx/conf.d/mage2
-      - ./nginx/servers/mage2.local.conf:/etc/nginx/conf.d/mage2.local.conf
+      - ~/Projects/mappin_m2:/mappin/:delegated
+      - ./nginx/servers/:/etc/nginx/conf.d/
+      - ./nginx/mage2.conf:/etc/nginx/mage2
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - network-back
