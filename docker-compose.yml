@@ -29,6 +29,7 @@ services:
     image: mariadb
     container_name: mage2_mariadb
     volumes:
+      - ./dumps/:/dumps/
       - ~/databases/magento2:/var/lib/mysql/
     ports:
       - "3306:3306"
